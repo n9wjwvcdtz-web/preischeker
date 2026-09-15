@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PreisChecker – KI Preisprüfung</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="app-header">
+
+    <div class="logo-area">
+        <h1>PreisChecker</h1>
+        <p>Finde schnell den richtigen Preis.</p>
+    </div>
+
+    <!-- OBEN RECHTS -->
+    <div class="top-filters">
+
+        <div class="filter-item">
+            <label for="brand">Marke</label>
+            <input
+                type="text"
+                id="brand"
+                placeholder="z. B. BMW"
+            >
+        </div>
+
+        <div class="filter-item">
+            <label for="model">Modell</label>
+            <input
+                type="text"
+                id="model"
+                placeholder="z. B. M5"
+            >
+        </div>
+
+        <div class="filter-item">
+            <label for="year">Baujahr</label>
+            <input
+                type="number"
+                id="year"
+                placeholder="z. B. 2020"
+            >
+        </div>
+
+        <div class="filter-item">
+            <label for="price">Preis</label>
+            <input
+                type="number"
+                id="price"
+                placeholder="z. B. 25000"
+            >
+        </div>
+        <div class="filter-item">
+        <label for="budget">Mein Budget</label>
+        <input
+        type="number"
+        id="budget"
+        placeholder="z. B. 700"
+        >
+        </div>
+   
+        </div>
+        <div class="filter-item">
+            <label for="mileage">Kilometerstand</label>
+            <input
+                type="number"
+                id="mileage"
+                placeholder="z. B. 85000"
+            >
+        </div>
+
+        <div class="filter-item">
+            <label for="countrySelect">Land</label>
+
+            <select id="countrySelect">
+                <option value="DE">🇩🇪 Deutschland</option>
+                <option value="US">🇺🇸 USA</option>
+                <option value="GB">🇬🇧 Großbritannien</option>
+                <option value="RU">🇷🇺 Russland</option>
+                <option value="FR">🇫🇷 Frankreich</option>
+                <option value="IT">🇮🇹 Italien</option>
+                <option value="ES">🇪🇸 Spanien</option>
+                <option value="PL">🇵🇱 Polen</option>
+                <option value="CH">🇨🇭 Schweiz</option>
+                <option value="UA">🇺🇦 Ukraine</option>
+            </select>
+        </div>
+
+        <div class="filter-item">
+            <label for="currency">Währung</label>
+
+            <select id="currency">
+                <option value="EUR">€ EUR</option>
+                <option value="USD">$ USD</option>
+                <option value="GBP">£ GBP</option>
+                <option value="RUB">₽ RUB</option>
+                <option value="CHF">Fr. CHF</option>
+                <option value="PLN">zł PLN</option>
+                <option value="UAH">₴ UAH</option>
+            </select>
+        </div>
+
+        <button
+            id="themeButton"
+            class="theme-button"
+            type="button"
+            title="Design wechseln"
+        >
+            🌙
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main-container">
+
+    <!-- MITTE -->
+    <section class="hero-section">
+
+        <span class="hero-label">🤖 KI-Preisprüfung</span>
+
+        <h2>
+            Was möchtest du<br>
+            <span>bewerten?</span>
+        </h2>
+
+        <p class="hero-text">
+            Beschreibe dein Produkt oder lade ein Bild hoch.
+            PreisChecker hilft dir dabei, einen realistischen
+            Marktpreis zu finden.
+        </p>
+
+    </section>
+
+
+    <!-- EINGABEBEREICH -->
+    <section class="input-section">
+
+        <div class="message-box">
+
+            <!-- PLUS -->
+            <button
+                type="button"
+                id="addButton"
+                class="add-button"
+                title="Hinzufügen"
+            >
+                ＋
+            </button>
+
+            <!-- TEXT -->
+            <textarea
+                id="description"
+                placeholder="Beschreibe dein Produkt..."
+                rows="4"
+            ></textarea>
+
+            <!-- SPRACHE -->
+            <button
+                type="button"
+                id="voiceButton"
+                class="voice-button"
+                title="Spracheingabe"
+            >
+                🎤
+            </button>
+
+        </div>
+
+
+        <!-- PLUS MENÜ -->
+        <div
+            id="addMenu"
+            class="add-menu hidden"
+        >
+
+            <button
+                type="button"
+                id="imageAddButton"
+            >
+                📷 Bild hochladen
+            </button>
+
+            <button
+                type="button"
+                id="fileAddButton"
+            >
+                📁 Datei hinzufügen
+            </button>
+
+            <button
+                type="button"
+                id="cameraAddButton"
+            >
+                📸 Foto aufnehmen
+            </button>
+
+        </div>
+
+
+        <!-- BILD -->
+        <input
+            type="file"
+            id="imageFile"
+            accept="image/*"
+            hidden
+        >
+
+        <div
+            id="imagePreview"
+            class="image-preview hidden"
+        ></div>
+
+
+        <!-- SPRACHSTATUS -->
+        <div
+            id="voiceStatus"
+            class="voice-status"
+        ></div>
+
+
+        <!-- ANALYSIEREN -->
+        <button
+            id="analyzeButton"
+            class="analyze-button"
+            type="button"
+        >
+            <span>🔍</span>
+            Preis analysieren
+        </button>
+
+    </section>
+
+
+    <!-- LOADING -->
+    <section
+        id="loadingSection"
+        class="loading-section hidden"
+    >
+
+        <div class="loading-animation"></div>
+
+        <h3>PreisChecker analysiert dein Produkt...</h3>
+
+        <p>
+            Die KI prüft deine Angaben und erstellt
+            eine realistische Preiseinschätzung.
+        </p>
+
+    </section>
+
+
+    <!-- ERGEBNIS -->
+    <section
+        id="resultSection"
+        class="result-section hidden"
+    >
+
+        <div class="result-header">
+
+            <div>
+                <span class="result-label">
+                    KI-Analyse
+                </span>
+
+                <h2 id="resultProduct">
+                    Produkt
+                </h2>
+            </div>
+
+            <div
+                id="resultRating"
+                class="rating"
+            >
+                ★★★★★
+            </div>
+
+        </div>
+
+
+        <!-- PREIS -->
+        <div class="price-main">
+
+            <span>
+                Geschätzter Marktwert
+            </span>
+
+            <strong id="estimatedPrice">
+                0 €
+            </strong>
+
+            <small id="priceRange">
+                —
+            </small>
+
+        </div>
+
+
+        <!-- EMPFEHLUNG -->
+        <div class="recommendation">
+
+            <div class="recommendation-icon">
+                💰
+            </div>
+
+            <div>
+
+                <span>
+                    Empfohlener Verkaufspreis
+                </span>
+
+                <strong id="recommendedPrice">
+                    0 €
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- PREISQUELLEN -->
+        <div class="marketplaces">
+
+            <h3>
+                🔎 Preisquellen
+            </h3>
+
+            <div
+                id="marketplaceList"
+                class="marketplace-list"
+            ></div>
+
+        </div>
+
+
+        <!-- KI EINSCHÄTZUNG -->
+        <div class="analysis-box">
+
+            <h3>
+                🤖 Einschätzung
+            </h3>
+
+            <p id="analysisText">
+                —
+            </p>
+
+        </div>
+
+
+        <!-- NEUE ANALYSE -->
+        <button
+            id="newAnalysisButton"
+            class="secondary-button"
+            type="button"
+        >
+            ↻ Neue Analyse
+        </button>
+
+    </section>
+
+</main>
+
+
+<footer class="app-footer">
+
+    <p>
+        PreisChecker · KI-gestützte Preiseinschätzung
+    </p>
+
+</footer>
+
+
+<!-- KONFIGURATION -->
+<script src="config.js"></script>
+
+<!-- APP -->
+<script src="app.js"></script>
+
+</body>
+</html>
