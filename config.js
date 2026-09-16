@@ -1,6 +1,6 @@
 const PRICECHECKER_CONFIG = {
 
-    API_URL: "http://localhost:3000",
+   API_URL: "https://preischeker.onrender.com",
 
     countries: {
 
